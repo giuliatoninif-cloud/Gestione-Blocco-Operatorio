@@ -1,0 +1,79 @@
+:root {
+  /* Colori principali */
+  --colore-primario: #2c3e50;
+--colore-secondario: #f39c12;
+--colore-danger: #c0392b;
+--colore-alert: #e74c3c;
+
+  --colore-grigio: #eee;
+  --colore-testo: #333;
+  --colore-sottotitolo: #666;
+
+  /* Sfondo e bordi */
+  --sfondo-riepilogo: #F3F6F9;
+  --bordo-standard: #ddd;
+
+  /* Font */
+  --font-base: 'Segoe UI', sans-serif;
+  --font-size-base: 16px;
+  --font-size-titolo: 1.4rem;
+  --font-size-sottotitolo: 0.9rem;
+
+  /* Spaziature */
+  --spazio-piccolo: 0.5rem;
+  --spazio-medio: 1rem;
+  --spazio-grande: 2rem;
+
+  /* Raggio bordi */
+  --raggio-bordo: 8px;
+}
+
+/* Bottoni */
+button.blu:hover {
+  background-color: #005fa3;
+  color: white;
+  border: none;
+  padding: var(--spazio-piccolo) var(--spazio-medio);
+  border-radius: var(--raggio-bordo);
+  cursor: pointer;
+  font-family: var(--font-base);
+}
+
+button.arancione {
+  background-color: var(--colore-secondario);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--raggio-bordo);
+  cursor: pointer;
+}
+
+button.rosso {
+  background-color: var(--colore-danger);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--raggio-bordo);
+  cursor: pointer;
+}
+
+/* Riepilogo */
+.riepilogo {
+  background-color: var(--sfondo-riepilogo);
+  padding: var(--spazio-medio);
+  border-radius: var(--raggio-bordo);
+  border: 1px solid var(--bordo-standard);
+  font-family: var(--font-base);
+}
+
+/* Titoli */
+h2, h4 {
+  font-family: var(--font-base);
+  color: var(--colore-primario);
+}
+
+p, label, select, input {
+  font-family: var(--font-base);
+  font-size: var(--font-size-base);
+  color: var(--colore-testo);
+}
