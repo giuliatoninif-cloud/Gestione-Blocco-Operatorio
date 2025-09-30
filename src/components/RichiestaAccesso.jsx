@@ -8,19 +8,34 @@ export default function RichiestaAccesso() {
   const [inviato, setInviato] = useState(false);
 
   const inviaRichiesta = async (e) => {
-    e.preventDefault();
-    try {
-      await addDoc(collection(db, "richiesteAccesso"), {
-        nome,
-        email,
-        stato: "in attesa",
-        timestamp: new Date()
-      });
-      setInviato(true);
-    } catch (error) {
-      console.error("Errore nell'invio:", error);
-    }
-  };
+  e.preventDefault();
+  setErrore("");
+
+  if (!email || !password || !nome) {
+    return setErrore("Compila tutti i campi.");
+  }
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    await setDoc(doc(db, "richiesteAccesso", user.uid), {
+      email,
+      nome,
+      ruolo: "utente",
+      stato: "in attesa"
+    });
+
+    setErrore("Richiesta inviata con successo ✅");
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 2000);
+  } catch (error) {
+    setErrore(error.message);
+  }
+};
+
 
   return (
     <div>
