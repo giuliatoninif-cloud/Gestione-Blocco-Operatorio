@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../utils/firebase";
+import { doc, getDoc } from "firebase/firestore";
 import NotificheSettimana from "../components/NotificheSettimana";
 
 function getSeduteSettimana(sedute) {
   const oggi = new Date();
   const lunedi = new Date(oggi);
-  lunedi.setDate(oggi.getDate() - oggi.getDay() + 1); // lunedì
+  lunedi.setDate(oggi.getDate() - oggi.getDay() + 1);
   const domenica = new Date(lunedi);
-  domenica.setDate(lunedi.getDate() + 6); // domenica
-const seduteSettimana = getSeduteSettimana(sedute);
-const saleScoperte = seduteSettimana.filter(s => !s.coperta).length;
+  domenica.setDate(lunedi.getDate() + 6);
 
   return sedute.filter(s => {
     const dataSeduta = new Date(s.data);
@@ -23,14 +23,28 @@ export default function Dashboard() {
   ]);
 
   const [sedute, setSedute] = useState([
-  { id: 1, data: "2025-09-29", coperta: true },
-  { id: 2, data: "2025-10-01", coperta: false },
-  { id: 3, data: "2025-10-03", coperta: false },
-  { id: 4, data: "2025-10-10", coperta: true } // fuori dalla settimana
-]);
+    { id: 1, data: "2025-09-29", coperta: true },
+    { id: 2, data: "2025-10-01", coperta: false },
+    { id: 3, data: "2025-10-03", coperta: false },
+    { id: 4, data: "2025-10-10", coperta: true }
+  ]);
 
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const saleScoperte = sedute.filter(s => !s.coperta).length;
+  useEffect(() => {
+    const controllaRuolo = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+      const docRef = doc(db, "richiesteAccesso", user.email);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists() && docSnap.data().ruolo === "admin") {
+        setIsAdmin(true);
+      }
+    };
+    controllaRuolo();
+  }, []);
+
+  const saleScoperte = getSeduteSettimana(sedute).filter(s => !s.coperta).length;
 
   return (
     <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
@@ -48,7 +62,13 @@ export default function Dashboard() {
           </li>
         ))}
       </ul>
+
+      {isAdmin && (
+        <div style={{ marginTop: "2rem", padding: "1rem", background: "#eaf4ff", borderRadius: "8px" }}>
+          <h2>🔐 Sezione Amministratrice</h2>
+          <p>Vai a <a href="/gestione-richieste">Gestione Richieste</a> per approvare gli accessi.</p>
+        </div>
+      )}
     </div>
   );
 }
-

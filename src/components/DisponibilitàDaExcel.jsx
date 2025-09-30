@@ -11,7 +11,7 @@ const DisponibilitàDaExcel = ({ giorno, setMattina, setPomeriggio }) => {
     F: null,
     DC: null,
     RB: null,
-    RRB: null,
+    RB: null,
     RR: null,
     SN: null,
     NC: null,

@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect } from "react";
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { GrigliaMensileDeluxe } from "./components";
@@ -17,6 +19,10 @@ import parseDataLocale from "./utils/parseDataLocale";
 import RiepilogoMessaggi from "./components/RiepilogoMessaggi";
 import NotificheSettimana from "./components/NotificheSettimana";
 import Home from "./pages/Home";
+
+
+import GestioneRichieste from "./components/GestioneRichieste";
+import Protezione from "./components/Protezione";
 
 export default function App() {
   const { tema } = useTema();
@@ -122,9 +128,24 @@ const [turni, setTurni] = useState([]);
       />
       <Routes>
         <Route path="/home" element={<Home sedute={sedute} />} />
-
+<Route
+  path="/dashboard"
+  element={
+    <Protezione>
+      <Dashboard />
+    </Protezione>
+  }
+/>
+<Route
+  path="/gestione-richieste"
+  element={
+    <Protezione>
+      <GestioneRichieste />
+    </Protezione>
+  }
+/>
         <Route path="/" element={<Navigate to="/home" />} />
-       
+      
         <Route
           path="/griglia"
           element={
