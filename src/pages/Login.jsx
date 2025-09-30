@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../utils/firebase";
@@ -40,14 +40,14 @@ export default function Login({ onLogin }) {
 
       navigate("/dashboard");
     } catch (error) {
-      setErrore(error.message);
+      setErrore("Credenziali non valide o errore di accesso.");
     }
   };
 
   return (
     <div style={styles.container}>
       <form onSubmit={handleLogin} style={styles.form}>
-        <h2 style={styles.title}>Benvenuta 👋</h2>
+        <h2 style={styles.title}>Benvenuto 👋</h2>
         <p style={styles.subtitle}>Accedi al pannello amministrativo</p>
         {errore && <p style={styles.error}>{errore}</p>}
         <input
@@ -65,6 +65,11 @@ export default function Login({ onLogin }) {
           style={styles.input}
         />
         <button type="submit" style={styles.button}>Entra</button>
+
+        <p style={styles.link}>
+          Non hai un account?{" "}
+          <Link to="/richiesta-accesso" style={styles.linkAnchor}>Richiedi accesso</Link>
+        </p>
       </form>
     </div>
   );
@@ -76,7 +81,8 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    background: "linear-gradient(135deg, #f0f4f8, #d9e2ec)"
+    background: "linear-gradient(135deg, #f0f4f8, #d9e2ec)",
+    padding: "1rem"
   },
   form: {
     backgroundColor: "#ffffff",
@@ -119,5 +125,16 @@ const styles = {
     fontSize: "1rem",
     border: "none",
     cursor: "pointer"
+  },
+  link: {
+    textAlign: "center",
+    fontSize: "0.9rem",
+    marginTop: "0.5rem",
+    color: "#7f8c8d"
+  },
+  linkAnchor: {
+    color: "#3498db",
+    textDecoration: "none",
+    fontWeight: "bold"
   }
 };

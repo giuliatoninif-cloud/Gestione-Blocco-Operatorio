@@ -19,7 +19,7 @@ import parseDataLocale from "./utils/parseDataLocale";
 import RiepilogoMessaggi from "./components/RiepilogoMessaggi";
 import NotificheSettimana from "./components/NotificheSettimana";
 import Home from "./pages/Home";
-
+import RichiestaAccesso from "./components/RichiestaAccesso";
 
 import GestioneRichieste from "./components/GestioneRichieste";
 import Protezione from "./components/Protezione";
@@ -216,6 +216,7 @@ const [turni, setTurni] = useState([]);
             />
           }
         />
+        <Route path="/richiesta-accesso" element={<RichiestaAccesso />} />
         <Route path="/blocco" element={<BloccoOperatorio />} />
         <Route path="/planning" element={<PlanningSettimana sedute={sedute} />} />
         <Route
